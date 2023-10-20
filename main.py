@@ -1,6 +1,6 @@
 from aiogram import executor
 from config import dp
-from handlers import start, chat_action
+from handlers import start, chat_action, fsm_anketa
 from database.sql_commands import Database
 
 
@@ -8,7 +8,7 @@ async def onstart_up(_):
     db = Database()
     db.create_tables()
 
-
+fsm_anketa.register_fsm_anketa_handlers(dp=dp)
 start.register_start_handlers(dp=dp)
 
 chat_action.register_chat_action_handlers(dp=dp)

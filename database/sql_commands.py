@@ -12,6 +12,7 @@ class Database:
             print('Database connected')
         self.connection.execute(sql_queries.CREATE_USER_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_BAN_USERS_TABLE)
+        self.connection.execute(sql_queries.CREATE_ANKETA_USERS_TABLE)
         self.connection.commit()
 
     def sql_insert_user_query(self, telegram_id, username, first_name, last_name):
@@ -30,4 +31,9 @@ class Database:
 
     def sql_update_count_command(self, telegram_id):
         self.cursor.execute(sql_queries.UPDATE_COUNT_BAN_USERS, (telegram_id,))
+        self.connection.commit()
+
+    def sql_insert_anketa_command(self, name, age, bio, photo, hobby):
+        self.cursor.execute(sql_queries.INSERT_ANKETA_USERS,
+                            (None, name, age, bio, photo, hobby))
         self.connection.commit()

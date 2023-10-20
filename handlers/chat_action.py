@@ -1,9 +1,10 @@
-from aiogram import types,Dispatcher
+from aiogram import types, Dispatcher
 
 from config import GROUP_ID, bot
 from database.sql_commands import Database
 
-async def echo(message:types.Message):
+
+async def echo(message: types.Message):
     print(message.chat.id)
     bad_word = ['damm', ]
     if message.chat.id in GROUP_ID:
@@ -22,5 +23,7 @@ async def echo(message:types.Message):
                 await bot.delete_message(chat_id=message.chat.id,
                                          message_id=message.message_id)
                 await message.answer('НЕ ПИШИ ПЛОХИЕ СЛОВА')
+
+
 def register_chat_action_handlers(dp: Dispatcher):
     dp.register_message_handler(echo)
