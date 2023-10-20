@@ -13,3 +13,12 @@ CREATE_USER_TABLE_QUERY = """
 INSERT_USER_QUERY = """
 insert or ignore into telegram_users VALUES (?,?,?,?,?)
 """
+CREATE_BAN_USERS_TABLE = """CREATE TABLE IF NOT EXISTS ban_users(
+                            id INTEGER PRIMARY KEY,
+                            telegram_id INTEGER,
+                            COUNT INTEGER,
+                            UNIQUE(telegram_id)
+)"""
+INSERT_BAN_USERS = """INSERT OR IGNORE INTO ban_users VALUES (?,?,?)"""
+SELECT_BAN_USERS = """SELECT * FROM ban_users """
+UPDATE_COUNT_BAN_USERS = """UPDATE ban_users SET COUNT = COUNT + 1 WHERE  telegram_id =?"""
