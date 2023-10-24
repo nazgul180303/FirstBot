@@ -37,3 +37,7 @@ class Database:
         self.cursor.execute(sql_queries.INSERT_ANKETA_USERS,
                             (None, name, age, bio, photo, hobby))
         self.connection.commit()
+
+    def sql_select_anket_command(self):
+        self.cursor.execute(sql_queries.SELECT_ANKETA_USERS)
+        return self.cursor.fetchall()

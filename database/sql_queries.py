@@ -32,3 +32,4 @@ CREATE_ANKETA_USERS_TABLE = """CREATE TABLE IF NOT EXISTS anketa(
                                 UNIQUE(id)
                                 )"""
 INSERT_ANKETA_USERS = """INSERT OR IGNORE INTO anketa VALUES (?,?,?,?,?,?)"""
+SELECT_ANKETA_USERS = """SELECT * FROM anketa """
