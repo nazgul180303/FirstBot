@@ -4,6 +4,7 @@ from aiogram import types, Dispatcher
 
 from config import bot
 from database.sql_commands import Database
+from handlers.scraping.o_kg import ServiceOScrapper
 from keyboards.inline_button import like_notlike
 
 
@@ -20,7 +21,17 @@ async def random_users_next(message: types.CallbackQuery):
         await bot.send_photo(chat_id=message.from_user.id, photo=photo, caption=response,
                              reply_markup=await like_notlike())
 
+
+async def service_o(call: types.CallbackQuery):
+    scraper = ServiceOScrapper()
+    data = scraper.parse_data()
+    links = ServiceOScrapper.PLUS_URL
+    for link in data:
+
+        await  bot.send_message(chat_id=call.from_user.id, text=f"Услуги О!:"
+                                                                f"\n{links}{link}")
+
+
 def register_callback_handler(dp: Dispatcher):
     dp.register_callback_query_handler(random_users_next, lambda call: call.data == 'like' or call.data == 'dithlike')
-
-
+    dp.register_callback_query_handler(service_o, lambda call: call.data == 'service_o')
