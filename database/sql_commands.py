@@ -13,11 +13,16 @@ class Database:
         self.connection.execute(sql_queries.CREATE_USER_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_BAN_USERS_TABLE)
         self.connection.execute(sql_queries.CREATE_ANKETA_USERS_TABLE)
+        self.connection.execute(sql_queries.CREATE_REFERENCE_TABLE)
+        try:
+            self.connection.execute(sql_queries.ALTER_USER_TABLE)
+        except sqlite3.OperationalError:
+            pass
         self.connection.commit()
 
     def sql_insert_user_query(self, telegram_id, username, first_name, last_name):
         self.cursor.execute(sql_queries.INSERT_USER_QUERY,
-                            (None, telegram_id, username, first_name, last_name,))
+                            (None, telegram_id, username, first_name, last_name, None))
         self.connection.commit()
 
     def sql_insert_ban_user_query(self, telegram_id):
@@ -25,8 +30,21 @@ class Database:
                             (None, telegram_id, 1))
         self.connection.commit()
 
+    def sql_insert_reference_link_query(self, telegram_id, reference_link):
+        self.cursor.execute(sql_queries.INSERT_REFERENCE_QUERY,
+                            (None, telegram_id, reference_link))
+        self.connection.commit()
+
+    def sql_select_reference_command(self):
+        self.cursor.execute(sql_queries.SELECT_REFERENCE_QUERY)
+        return self.cursor.fetchall()
+
     def sql_select_command(self):
         self.cursor.execute(sql_queries.SELECT_BAN_USERS)
+        return self.cursor.fetchall()
+
+    def sql_select_user_command(self, telegram_id):
+        self.cursor.execute(sql_queries.SELECT_USERS_QUERY, (telegram_id,))
         return self.cursor.fetchall()
 
     def sql_update_count_command(self, telegram_id):
@@ -41,3 +59,7 @@ class Database:
     def sql_select_anket_command(self):
         self.cursor.execute(sql_queries.SELECT_ANKETA_USERS)
         return self.cursor.fetchall()
+
+    def sql_update_reference_command(self, link, telegram_id):
+        self.cursor.execute(sql_queries.UPDATE_REFERENCE_USERS, (link, telegram_id,))
+        self.connection.commit()

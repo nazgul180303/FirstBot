@@ -3,7 +3,7 @@ import random
 from aiogram import types, Dispatcher
 from config import bot
 from database.sql_commands import Database
-from keyboards.inline_button import like_notlike
+from keyboards.inline_button import like_notlike, referance
 
 async def start_button(message: types.Message):
     print(message)
@@ -17,7 +17,7 @@ async def start_button(message: types.Message):
 
     await bot.send_message(
         chat_id=message.chat.id,
-        text=f'Доброго времени суток мои тестировщика бота',
+        text=f'Доброго времени суток мои тестировщика бота', reply_markup= await referance()
     )
 
 

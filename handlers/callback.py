@@ -22,3 +22,5 @@ async def random_users_next(message: types.CallbackQuery):
 
 def register_callback_handler(dp: Dispatcher):
     dp.register_callback_query_handler(random_users_next, lambda call: call.data == 'like' or call.data == 'dithlike')
+
+

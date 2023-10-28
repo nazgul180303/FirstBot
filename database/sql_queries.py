@@ -9,9 +9,25 @@ CREATE_USER_TABLE_QUERY = """
     unique (telegram_id)
     )
 """
+ALTER_USER_TABLE = """
+ALTER TABLE telegram_users
+ADD COLUMN REFERENCE_LINK TEXT 
+"""
+SELECT_USERS_QUERY = """SELECT * FROM telegram_users WHERE telegram_id = ?"""
+UPDATE_REFERENCE_USERS = """UPDATE telegram_users SET REFERENCE_LINK = ? WHERE  telegram_id =?"""
+
+SELECT_REFERENCE_QUERY = """SELECT * FROM telegram_users"""
+
+CREATE_REFERENCE_TABLE ="""CREATE TABLE IF NOT EXISTS reference_users 
+                        (ID INTEGER PRIMARY KEY,
+                         TELEGRAM_ID INTEGER,
+                         REFERENCE_LINK TEXT,
+                         unique (telegram_id)
+)"""
+INSERT_REFERENCE_QUERY = """INSERT OR IGNORE INTO reference_users VALUES (?,?,?)"""
 
 INSERT_USER_QUERY = """
-insert or ignore into telegram_users VALUES (?,?,?,?,?)
+insert or ignore into telegram_users VALUES (?,?,?,?,?,?)
 """
 CREATE_BAN_USERS_TABLE = """CREATE TABLE IF NOT EXISTS ban_users(
                             id INTEGER PRIMARY KEY,
