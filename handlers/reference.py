@@ -28,7 +28,7 @@ async def reference_link_call(call: types.CallbackQuery):
                                text='Создано ссылка')
     else:
         await bot.send_message(chat_id=call.from_user.id,
-                               text=user[0][5], )
+                               text=user[0][5])
 
 
 async def reference_list(call: types.CallbackQuery):

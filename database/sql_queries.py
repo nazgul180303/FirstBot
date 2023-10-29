@@ -49,3 +49,21 @@ CREATE_ANKETA_USERS_TABLE = """CREATE TABLE IF NOT EXISTS anketa(
                                 )"""
 INSERT_ANKETA_USERS = """INSERT OR IGNORE INTO anketa VALUES (?,?,?,?,?,?)"""
 SELECT_ANKETA_USERS = """SELECT * FROM anketa """
+
+
+CREATE_TABLE_BEST_SERVISE = """CREATE TABLE IF NOT EXISTS best_service
+             (ID INTEGER PRIMARY KEY,
+             OWNER_TELEGRAM_ID INTEGER,
+             SERVISE LINK TEXT,
+             UNIQUE(ID))
+
+
+"""
+INSERT_BEST_SERVISE = """INSERT OR IGNORE INTO best_service VALUES (?,?,?)"""
+SELECT_BEST_SERVISE = """SELECT * FROM best_service WHERE  OWNER_TELEGRAM_ID = ? """
+
+CREATE_TABLE_SERVISE = """ CREATE TABLE IF NOT EXISTS servise
+                            (ID INTEGER PRIMARY KEY,
+                            LINK TEXT)
+"""
+INSERT_SERVISE = """INSERT OR IGNORE INTO servise VALUES (?,?)"""

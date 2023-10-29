@@ -1,11 +1,12 @@
 import random
+import re
 
 from aiogram import types, Dispatcher
 
 from config import bot
 from database.sql_commands import Database
 from handlers.scraping.o_kg import ServiceOScrapper
-from keyboards.inline_button import like_notlike
+from keyboards.inline_button import like_notlike, save_button
 
 
 async def random_users_next(message: types.CallbackQuery):
@@ -27,11 +28,20 @@ async def service_o(call: types.CallbackQuery):
     data = scraper.parse_data()
     links = ServiceOScrapper.PLUS_URL
     for link in data:
-
         await  bot.send_message(chat_id=call.from_user.id, text=f"Услуги О!:"
-                                                                f"\n{links}{link}")
+                                                                f"\n{links}{link}", reply_markup=await save_button())
+
+
+async def save_service_call(call: types.CallbackQuery):
+    link = re.search(r'(https?://\S+)', call.message.text)
+    if link:
+        Database().sql_insert_best_servise_commands(owner_telegram_id=call.from_user.id, servise_link=
+                                                    link.group(0))
+
+    await bot.send_message(chat_id=call.from_user.id, text="Вы сохранили ссылку")
 
 
 def register_callback_handler(dp: Dispatcher):
     dp.register_callback_query_handler(random_users_next, lambda call: call.data == 'like' or call.data == 'dithlike')
     dp.register_callback_query_handler(service_o, lambda call: call.data == 'service_o')
+    dp.register_callback_query_handler(save_service_call, lambda call: call.data == 'save_service')

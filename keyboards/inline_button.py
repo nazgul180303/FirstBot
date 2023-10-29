@@ -36,3 +36,12 @@ async def referance_link():
     )
     markup.add(referance_link, )
     return markup
+
+
+async def save_button():
+    markup = InlineKeyboardMarkup()
+    save_service = InlineKeyboardButton(
+        'Сохранить', callback_data='save_service'
+    )
+    markup.add(save_service)
+    return markup

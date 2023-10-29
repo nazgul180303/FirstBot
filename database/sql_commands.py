@@ -14,6 +14,8 @@ class Database:
         self.connection.execute(sql_queries.CREATE_BAN_USERS_TABLE)
         self.connection.execute(sql_queries.CREATE_ANKETA_USERS_TABLE)
         self.connection.execute(sql_queries.CREATE_REFERENCE_TABLE)
+        self.connection.execute(sql_queries.CREATE_TABLE_BEST_SERVISE)
+        self.connection.execute(sql_queries.CREATE_TABLE_SERVISE)
         try:
             self.connection.execute(sql_queries.ALTER_USER_TABLE)
         except sqlite3.OperationalError:
@@ -62,4 +64,20 @@ class Database:
 
     def sql_update_reference_command(self, link, telegram_id):
         self.cursor.execute(sql_queries.UPDATE_REFERENCE_USERS, (link, telegram_id,))
+        self.connection.commit()
+
+    def sql_insert_best_servise_commands(self, owner_telegram_id, servise_link):
+        self.cursor.execute(
+            sql_queries.INSERT_BEST_SERVISE,
+            (None, owner_telegram_id, servise_link,)
+
+        )
+        self.connection.commit()
+
+    def sql_insert_servise_commands(self, link):
+        self.cursor.execute(
+            sql_queries.INSERT_SERVISE,
+            (None, link)
+
+        )
         self.connection.commit()

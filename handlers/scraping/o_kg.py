@@ -12,7 +12,7 @@ class ServiceOScrapper:
         tree = Selector(text=html)
         links = tree.xpath(self.LINK_XPATH).extract()
         for link in links:
-             print(self.PLUS_URL + link)
+            pass
         return links[:5]
 
 
