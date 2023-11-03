@@ -24,8 +24,11 @@ async def referance():
     service_button = InlineKeyboardButton(
         'услуги О!', callback_data='service_o'
     )
+    async_service_button = InlineKeyboardButton(
+        'быстрые услуги О!', callback_data='async_service'
+    )
     markup.add(referance_menu, referance_list)
-    markup.add(service_button)
+    markup.add(service_button, async_service_button)
     return markup
 
 
